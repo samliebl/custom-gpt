@@ -1,0 +1,12 @@
+{% extends "layouts/base.njk" %}
+
+{% block content %}
+<h1>Submit Your Text</h1>
+<form id="textForm">
+    <label for="textInput">Enter your text:</label>
+    <input type="text" id="textInput" name="textInput" required>
+    <button type="submit">Submit</button>
+</form>
+
+<div class="response" id="response"></div>
+{% endblock %}
