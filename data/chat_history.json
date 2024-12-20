@@ -292,5 +292,30 @@
     "role": "assistant",
     "content": "From the information provided, here are the characters mentioned in your narrative so far:\n\n1. **Eathel (Lord Iyoékebídyé Nuomèt)** – The main protagonist, born a bastard son of a duke, who rises to power despite numerous adversities. He is known as 'The Unifier' and is a brilliant strategist and a charismatic leader, revered for his service to the greater good. He delves into battles considering various aspects like supply lines, morale of his men, the latest war technology and methods, and inspiring others.\n\n2. **Comte du Davycevo** - Eathel's primary rival, the son of the Duke Cycleviohastis of Daryowaucha.\n\n3. **Duke Cycleviohastis** - Father of Comte du Davycevo and the Duke of Daryowaucha.\n\n4. **Saegho** - Potentially responsible for the group of 147 soldiers traversing through the lands.\n\n5. **Godone Eofuseptan (King-Vassal-Knight)** - Another potential instigator behind the group of 147 men.\n\n6. **Sinifamep Titu (King-Vassal-Rogue)** - Suspected to be related to the group of 147 men in armor.\n\n7. **Egéni or Egóni Rara (Messenger-Heart)** - The trusted courier providing key insights about the soldiers, leading to the assumptions that they are not ordinary marauders but a disciplined troop in disguise.\n\nRemember, the depth of these characters will depend on how they are further developed throughout the story.",
     "timestamp": "2024-12-18T18:21:06.178Z"
+  },
+  {
+    "role": "system",
+    "content": "Error: 429 Request too large for gpt-4 in organization org-MsNOxwopvyyoEe5s0oPWWzOH on tokens per min (TPM): Limit 10000, Requested 17700. The input or output tokens must be reduced in order to run successfully. Visit https://platform.openai.com/account/rate-limits to learn more.",
+    "timestamp": "2024-12-19T20:31:20.210Z"
+  },
+  {
+    "role": "user",
+    "content": "hi, what's your name?",
+    "timestamp": "2024-12-19T21:25:33.662Z"
+  },
+  {
+    "role": "assistant",
+    "content": "As an artificial intelligence, I don't have a personal name. You can simply call me OpenAI. How can I assist you further?",
+    "timestamp": "2024-12-19T21:25:33.665Z"
+  },
+  {
+    "role": "user",
+    "content": "what is a word in tera?",
+    "timestamp": "2024-12-19T21:25:58.638Z"
+  },
+  {
+    "role": "assistant",
+    "content": "Based on the previous information, here is a word in Tera language:\n- Dástratéra: In the Tera language, Dástratéra refers to the homeland of Tera. If you need more words or have a special request about Tera's language, feel free to ask!",
+    "timestamp": "2024-12-19T21:25:58.640Z"
   }
 ]
