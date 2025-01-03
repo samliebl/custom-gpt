@@ -2,36 +2,64 @@ document.addEventListener("DOMContentLoaded", () => {
     const form = document.getElementById("textForm");
     const textInput = document.getElementById("textInput");
     const responseDiv = document.getElementById("response");
+    const chatLog = document.getElementById("chat-log"); // Ensure this is inside DOMContentLoaded
 
-    let tickerInterval; // To track the interval
+    let tickerInterval;
     let tickerMessage = "Still processing";
-    let dotCount = 0; // To track the number of dots
+    let dotCount = 0;
 
-    // Function to start the ticker
     const startTicker = () => {
         tickerInterval = setInterval(() => {
-            dotCount = (dotCount + 1) % 4; // Cycle through 0, 1, 2, 3
+            dotCount = (dotCount + 1) % 4;
             responseDiv.textContent = `${tickerMessage}${".".repeat(dotCount)}`;
-        }, 500); // Update every 500ms
+        }, 500);
     };
 
-    // Function to stop the ticker
     const stopTicker = () => {
         clearInterval(tickerInterval);
-        dotCount = 0; // Reset dots
+        dotCount = 0;
     };
 
-    // Helper function to format newlines for HTML
     const formatResponse = (responseText) => {
         return responseText.replace(/\n\n/g, "<br><br>");
     };
 
-    // Form submission handler
+    const addChatEntry = (prompt, response) => {
+        const timestamp = new Date().toISOString().split("T")[0];
+        const promptSnippet = prompt.split(" ").slice(0, 5).join(" ") + "…";
+        const responseSnippet = response.split(" ").slice(0, 5).join(" ") + "…";
+
+        const entryTitle = `${promptSnippet} ${timestamp} ${responseSnippet}`;
+
+        const details = document.createElement("details");
+        const summary = document.createElement("summary");
+        summary.textContent = entryTitle;
+
+        const contentDiv = document.createElement("div");
+        contentDiv.innerHTML = `
+            <p><strong>Prompt:</strong> ${prompt}</p>
+            <p><strong>Response:</strong> ${response}</p>
+            <button class="copy-btn" onclick="copyToClipboard('${response}')">Copy Response</button>
+        `;
+
+        details.appendChild(summary);
+        details.appendChild(contentDiv);
+
+        chatLog.appendChild(details);
+    };
+
+    const copyToClipboard = (text) => {
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Response copied to clipboard!");
+        }).catch((err) => {
+            console.error("Failed to copy text:", err);
+        });
+    };
+
     const handleFormSubmit = async (event) => {
         event.preventDefault();
-
-        responseDiv.innerHTML = ""; // Clear any previous responses
-        startTicker(); // Start showing the ellipses ticker
+        responseDiv.innerHTML = "";
+        startTicker();
 
         const userMessage = textInput.value;
 
@@ -43,12 +71,12 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
             const data = await response.json();
-            stopTicker(); // Stop the ticker once response is received
-
-            // Display the formatted response
+            stopTicker();
             responseDiv.innerHTML = formatResponse(data.result);
+
+            addChatEntry(userMessage, data.result); // Add chat entry to the log
         } catch (error) {
-            stopTicker(); // Stop ticker on error
+            stopTicker();
             responseDiv.textContent = "An error occurred. Please try again.";
             console.error("Error:", error);
         }
