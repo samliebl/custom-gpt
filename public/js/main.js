@@ -1,25 +1,58 @@
-document.getElementById('textForm').addEventListener('submit', async (event) => {
-    event.preventDefault(); // Prevent default form submission
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("textForm");
+    const textInput = document.getElementById("textInput");
+    const responseDiv = document.getElementById("response");
 
-    const input = document.getElementById('textInput').value;
+    let tickerInterval; // To track the interval
+    let tickerMessage = "Still processing";
+    let dotCount = 0; // To track the number of dots
 
-    try {
-        const response = await fetch('/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ textInput: input })
-        });
+    // Function to start the ticker
+    const startTicker = () => {
+        tickerInterval = setInterval(() => {
+            dotCount = (dotCount + 1) % 4; // Cycle through 0, 1, 2, 3
+            responseDiv.textContent = `${tickerMessage}${".".repeat(dotCount)}`;
+        }, 500); // Update every 500ms
+    };
 
-        if (response.ok) {
+    // Function to stop the ticker
+    const stopTicker = () => {
+        clearInterval(tickerInterval);
+        dotCount = 0; // Reset dots
+    };
+
+    // Helper function to format newlines for HTML
+    const formatResponse = (responseText) => {
+        return responseText.replace(/\n\n/g, "<br><br>");
+    };
+
+    // Form submission handler
+    const handleFormSubmit = async (event) => {
+        event.preventDefault();
+
+        responseDiv.innerHTML = ""; // Clear any previous responses
+        startTicker(); // Start showing the ellipses ticker
+
+        const userMessage = textInput.value;
+
+        try {
+            const response = await fetch("/submit", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ textInput: userMessage }),
+            });
+
             const data = await response.json();
-            document.getElementById('response').innerText = data.result;
-        } else {
-            document.getElementById('response').innerText = 'Error submitting data.';
+            stopTicker(); // Stop the ticker once response is received
+
+            // Display the formatted response
+            responseDiv.innerHTML = formatResponse(data.result);
+        } catch (error) {
+            stopTicker(); // Stop ticker on error
+            responseDiv.textContent = "An error occurred. Please try again.";
+            console.error("Error:", error);
         }
-    } catch (error) {
-        console.error('Error:', error);
-        document.getElementById('response').innerText = 'An unexpected error occurred.';
-    }
+    };
+
+    form.addEventListener("submit", handleFormSubmit);
 });
